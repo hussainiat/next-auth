@@ -111,6 +111,79 @@ class AuthAPI {
 
     return response.json();
   }
+
+  async getPendingUsers(): Promise<{ users: User[] }> {
+    const response = await this.fetchWithAuth(`${API_BASE_URL}/admin/pending-users`);
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to get pending users');
+    }
+
+    return response.json();
+  }
+
+  async approveUser(userId: string, reason?: string): Promise<{ message: string }> {
+    const response = await this.fetchWithAuth(`${API_BASE_URL}/admin/approve-user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, reason }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to approve user');
+    }
+
+    return response.json();
+  }
+
+  async rejectUser(userId: string, reason?: string): Promise<{ message: string }> {
+    const response = await this.fetchWithAuth(`${API_BASE_URL}/admin/reject-user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, reason }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to reject user');
+    }
+
+    return response.json();
+  }
+
+  async assignRole(userId: string, role: 'super_admin' | 'admin' | 'user'): Promise<{ message: string }> {
+    const response = await this.fetchWithAuth(`${API_BASE_URL}/admin/assign-role`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, role }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to assign role');
+    }
+
+    return response.json();
+  }
+
+  async getAllUsers(): Promise<{ users: User[] }> {
+    const response = await this.fetchWithAuth(`${API_BASE_URL}/admin/users`);
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to get users');
+    }
+
+    return response.json();
+  }
 }
 
 export const authAPI = new AuthAPI();

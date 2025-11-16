@@ -9,6 +9,7 @@ export interface SessionData {
     email: string;
     name: string;
     role: string;
+    approvalStatus: string;
   };
   isLoggedIn: boolean;
 }
@@ -37,6 +38,7 @@ export async function createSession(user: User) {
     email: user.email,
     name: user.name,
     role: user.role,
+    approvalStatus: user.approvalStatus,
   };
   session.isLoggedIn = true;
   await session.save();
@@ -60,4 +62,8 @@ export async function regenerateSession() {
     await newSession.save();
   }
   return newSession;
+}
+
+export async function getCurrentUser() {
+  return getSession();
 }

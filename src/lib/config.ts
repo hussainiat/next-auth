@@ -7,6 +7,8 @@ export const config = {
   nodeEnv: process.env.NODE_ENV || 'development',
   isDevelopment: process.env.NODE_ENV === 'development',
   isProduction: process.env.NODE_ENV === 'production',
+  superAdminEmail: process.env.SUPER_ADMIN_EMAIL || 'superadmin@example.com',
+  superAdminName: process.env.SUPER_ADMIN_NAME || 'Super Administrator',
 } as const;
 
 export const isTokenMode = config.authMode === 'token';

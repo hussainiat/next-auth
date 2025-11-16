@@ -5,6 +5,7 @@ import { users } from '@/lib/db/schema';
 import { hashPassword } from '@/lib/auth/password';
 import { eq } from 'drizzle-orm';
 import crypto from 'crypto';
+import { config } from '@/lib/config';
 
 const registerSchema = z.object({
   name: z.string().min(2).max(50),
@@ -40,6 +41,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check if this is the super admin (first user with super admin email)
+    const isSuperAdmin = email === config.superAdminEmail;
+    const [userCount] = await db.select({ count: db.fn.count() }).from(users);
+    const isFirstUser = userCount.count === 0;
+
     // Hash password
     const passwordHash = await hashPassword(password);
 
@@ -52,6 +58,9 @@ export async function POST(request: NextRequest) {
         name,
         email,
         passwordHash,
+        role: isSuperAdmin || isFirstUser ? 'super_admin' : 'user',
+        approvalStatus: isSuperAdmin || isFirstUser ? 'approved' : 'pending',
+        approvedAt: isSuperAdmin || isFirstUser ? new Date() : undefined,
       })
       .returning();
 
@@ -60,7 +69,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { 
-        message: 'User registered successfully',
+        message: isSuperAdmin || isFirstUser 
+          ? 'User registered successfully. Your account is approved.' 
+          : 'User registered successfully. Please wait for admin approval.',
         user: userWithoutPassword
       },
       { status: 201 }

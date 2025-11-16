@@ -32,7 +32,12 @@ export default function LoginPage() {
       await login(formData);
       router.push(redirectTo);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed');
+      const errorMessage = err instanceof Error ? err.message : 'Login failed';
+      if (errorMessage.includes('pending approval')) {
+        setError('Your account is pending approval. Please wait for an administrator to approve your account.');
+      } else {
+        setError(errorMessage);
+      }
     } finally {
       setIsSubmitting(false);
     }

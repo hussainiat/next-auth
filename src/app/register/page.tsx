@@ -46,7 +46,15 @@ export default function RegisterPage() {
         email: formData.email,
         password: formData.password,
       });
-      router.push('/dashboard');
+      // Show success message instead of redirecting
+      setError('Registration successful! Please wait for admin approval before logging in.');
+      // Clear form after successful registration
+      setFormData({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
     } finally {

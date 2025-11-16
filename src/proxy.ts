@@ -6,9 +6,9 @@ import { isTokenMode } from '@/lib/config';
 
 // Define protected routes and their required roles
 const protectedRoutes = {
-  '/dashboard': ['user', 'admin'],
-  '/admin': ['admin'],
-  '/profile': ['user', 'admin'],
+  '/dashboard': ['user', 'admin', 'super_admin'],
+  '/admin': ['admin', 'super_admin'],
+  '/profile': ['user', 'admin', 'super_admin'],
 };
 
 // Define public routes (redirect if authenticated)
@@ -27,6 +27,7 @@ export async function proxy(request: NextRequest) {
 
   let isAuthenticated = false;
   let userRole: string | null = null;
+  let isApproved = false;
 
   try {
     if (isTokenMode) {
@@ -38,6 +39,7 @@ export async function proxy(request: NextRequest) {
         if (payload) {
           isAuthenticated = true;
           userRole = payload.role;
+          isApproved = payload.approvalStatus === 'approved';
         }
       }
     } else {
@@ -46,6 +48,7 @@ export async function proxy(request: NextRequest) {
       if (session.isLoggedIn && session.user) {
         isAuthenticated = true;
         userRole = session.user.role;
+        isApproved = session.user.approvalStatus === 'approved';
       }
     }
   } catch (error) {
@@ -61,10 +64,16 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
+    // Check approval status (super_admin can access regardless of approval status)
+    if (!isApproved && userRole !== 'super_admin') {
+      // Redirect to pending approval page
+      return NextResponse.redirect(new URL('/pending-approval', request.url));
+    }
+
     // Check role-based access
     if (userRole && !requiredRoles.includes(userRole)) {
-      // Redirect to unauthorized page or dashboard
-      return NextResponse.redirect(new URL('/dashboard', request.url));
+      // Redirect to home if user lacks required role
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
 

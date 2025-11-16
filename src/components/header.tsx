@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useAuth } from "@/lib/auth/context"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
+import { AdminNotificationBadge } from "@/components/admin/notification-badge"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,7 +18,7 @@ import {
 export function Header() {
   const { user, isAuthenticated, logout, isLoading } = useAuth()
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6 md:gap-10">
           <Link href="/" className="flex items-center space-x-2">
@@ -33,7 +34,7 @@ export function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           href="/"
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-linear-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                         >
                           <div className="mb-2 mt-4 text-lg font-medium">
                             Next.js Enterprise Starter Kit
@@ -87,44 +88,56 @@ export function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/documentation" passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Documentation
-                  </NavigationMenuLink>
-                </Link>
+                <NavigationMenuLink href="/documentation" className={navigationMenuTriggerStyle()}>
+                  Documentation
+                </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/examples" passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Examples
-                  </NavigationMenuLink>
-                </Link>
+                <NavigationMenuLink href="/examples" className={navigationMenuTriggerStyle()}>
+                  Examples
+                </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
         <div className="flex items-center gap-2">
           <ThemeToggle />
+          {isAuthenticated && (user?.role === 'admin' || user?.role === 'super_admin') && (
+            <AdminNotificationBadge />
+          )}
           {isLoading ? (
             <div className="text-sm text-muted-foreground">Loading...</div>
           ) : isAuthenticated ? (
             <div className="flex items-center gap-4">
               <span className="text-sm text-muted-foreground">Welcome, {user?.name}</span>
-              <Button size="sm" variant="outline" asChild>
-                <Link href="/dashboard">Dashboard</Link>
-              </Button>
+              <Link href="/dashboard">
+                <Button size="sm" variant="outline">
+                  Dashboard
+                </Button>
+              </Link>
+              {(user?.role === 'admin' || user?.role === 'super_admin') && (
+                <Link href="/admin">
+                  <Button size="sm" variant="outline">
+                    Admin
+                  </Button>
+                </Link>
+              )}
               <Button size="sm" variant="ghost" onClick={logout}>
                 Logout
               </Button>
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <Button size="sm" variant="outline" asChild>
-                <Link href="/login">Login</Link>
-              </Button>
-              <Button size="sm" asChild>
-                <Link href="/register">Register</Link>
-              </Button>
+              <Link href="/login">
+                <Button size="sm" variant="outline">
+                  Login
+                </Button>
+              </Link>
+              <Link href="/register">
+                <Button size="sm">
+                  Register
+                </Button>
+              </Link>
             </div>
           )}
         </div>

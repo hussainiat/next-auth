@@ -50,6 +50,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check approval status (super_admin can always login)
+    if (user.approvalStatus !== 'approved' && user.role !== 'super_admin') {
+      return NextResponse.json(
+        { 
+          error: 'Account pending approval',
+          details: 'Your account is pending approval. Please wait for an administrator to approve your account.'
+        },
+        { status: 403 }
+      );
+    }
+
     // Return user data (excluding password)
     const { passwordHash: _, ...userWithoutPassword } = user;
 
@@ -59,6 +70,7 @@ export async function POST(request: NextRequest) {
         userId: user.id,
         email: user.email,
         role: user.role,
+        approvalStatus: user.approvalStatus,
       };
 
       const accessToken = await tokenManager.generateAccessToken(tokenPayload);

@@ -12,6 +12,8 @@ interface AuthContextType extends AuthState {
   logout: () => Promise<void>;
   refreshAccessToken: () => Promise<void>;
   checkAuth: () => Promise<void>;
+  isApproved: boolean;
+  canAccessDashboard: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -24,6 +26,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isAuthenticated: false,
     accessToken: null,
   });
+
+  const isApproved = state.user?.approvalStatus === 'approved';
+  const canAccessDashboard = state.isAuthenticated && isApproved;
 
   // Token refresh interval
   useEffect(() => {
@@ -64,6 +69,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = useCallback(async (credentials: LoginCredentials) => {
     try {
       const response = await authAPI.login(credentials);
+      
+      // Check if user is approved
+      if (response.user.approvalStatus !== 'approved' && response.user.role !== 'super_admin') {
+        throw new Error('Your account is pending approval. Please wait for an administrator to approve your account.');
+      }
+      
       setState(prev => ({
         ...prev,
         user: response.user,
@@ -127,6 +138,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     logout,
     refreshAccessToken,
     checkAuth,
+    isApproved,
+    canAccessDashboard,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

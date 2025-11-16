@@ -3,6 +3,7 @@
 import { useAuth } from '@/lib/auth/context';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 export default function DashboardPage() {
   const { user, logout } = useAuth();
@@ -44,6 +45,18 @@ export default function DashboardPage() {
               <div>
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Role</p>
                 <p className="text-lg font-semibold capitalize">{user?.role}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Status</p>
+                <Badge 
+                  variant={
+                    user?.approvalStatus === 'approved' ? 'default' :
+                    user?.approvalStatus === 'pending' ? 'secondary' : 'destructive'
+                  }
+                  className="text-sm"
+                >
+                  {user?.approvalStatus}
+                </Badge>
               </div>
             </CardContent>
           </Card>
