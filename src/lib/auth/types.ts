@@ -1,0 +1,32 @@
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'user';
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface AuthState {
+  user: User | null;
+  isLoading: boolean;
+  isAuthenticated: boolean;
+  accessToken: string | null;
+}
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface RegisterData {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface AuthResponse {
+  message: string;
+  user: User;
+  accessToken?: string;
+}

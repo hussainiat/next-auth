@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useAuth } from "@/lib/auth/context"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import {
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/navigation-menu"
 
 export function Header() {
+  const { user, isAuthenticated, logout, isLoading } = useAuth()
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -103,7 +105,28 @@ export function Header() {
         </div>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Button size="sm"><a href="https://github.com/hussainiat/next-starter.git">Get Started</a></Button>
+          {isLoading ? (
+            <div className="text-sm text-muted-foreground">Loading...</div>
+          ) : isAuthenticated ? (
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-muted-foreground">Welcome, {user?.name}</span>
+              <Button size="sm" variant="outline" asChild>
+                <Link href="/dashboard">Dashboard</Link>
+              </Button>
+              <Button size="sm" variant="ghost" onClick={logout}>
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Button size="sm" variant="outline" asChild>
+                <Link href="/login">Login</Link>
+              </Button>
+              <Button size="sm" asChild>
+                <Link href="/register">Register</Link>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </header>

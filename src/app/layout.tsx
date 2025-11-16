@@ -5,7 +5,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SonnerProvider } from "@/components/sonner-provider";
 import { Header } from "@/components/header";
-import { Footer } from "@/components/footer"; 
+import { Footer } from "@/components/footer";
+import { AuthProvider } from "@/lib/auth/context"; 
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,12 +34,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <SonnerProvider />
-          <div className="mx-auto max-w-7xl px-4">
-            <Header />
-            {children}
-            <Footer />
-          </div>
+          <AuthProvider>
+            <SonnerProvider />
+            <div className="mx-auto max-w-7xl px-4">
+              <Header />
+              {children}
+              <Footer />
+            </div>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

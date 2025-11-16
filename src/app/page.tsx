@@ -24,10 +24,10 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Button size="lg" asChild>
-                    <a href="/examples">View Examples</a>
+                    <a href="/dashboard">Go to Dashboard</a>
                   </Button>
-                  <Button size="lg" variant="outline">
-                  <a href="https://github.com/hussainiat/next-starter.git">View on GitHub</a>
+                  <Button size="lg" variant="outline" asChild>
+                    <a href="/login">Login</a>
                   </Button>
                 </div>
               </div>
@@ -101,6 +101,15 @@ export default function Home() {
                 </CardHeader>
                 <CardContent>
                   <p>Seamless dark mode integration with next-themes for a better user experience.</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Authentication</CardTitle>
+                  <CardDescription>Dual authentication modes with enterprise security</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p>Complete authentication system with JWT token-based and session-based modes, role-based access control, and modern security practices.</p>
                 </CardContent>
               </Card>
               <Card>

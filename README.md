@@ -1,311 +1,405 @@
-# 🚀 Next.js Enterprise Starter Kit
+# Next.js Enterprise Authentication System
 
-A production-ready, feature-rich starter kit for building modern web applications with the latest web technologies. Built with performance, developer experience, and scalability in mind.
-
-## ✨ What's New
-
-- **Next.js 16.0.3** - Latest major version with enhanced performance and features
-- **React 19.2.0** - Latest React with improved concurrent features
-- **TypeScript 5.9.3** - Enhanced type safety and developer experience
-- **Zod 4.1.12** - Major upgrade with improved schema validation
-- **Recharts 3.4.1** - Latest data visualization library
-- **All Radix UI components updated** - Latest accessible UI components
-- **Zero security vulnerabilities** - All packages updated to secure versions
-
-## 🛠️ Technology Stack
-
-### Core Framework
-- **[Next.js 16.0.3](https://nextjs.org/)** - React framework with App Router, React Server Components, and Turbopack
-- **[React 19.2.0](https://reactjs.org/)** - UI library with concurrent features and automatic batching
-- **[TypeScript 5.9.3](https://www.typescriptlang.org/)** - Type-safe JavaScript with enhanced IDE support
-
-### Styling & UI
-- **[Tailwind CSS 4.1.17](https://tailwindcss.com/)** - Utility-first CSS framework
-- **[Radix UI](https://www.radix-ui.com/)** - Headless accessible UI components (latest versions)
-- **[Shadcn/ui](https://ui.shadcn.com/)** - Beautiful, customizable components
-- **[Lucide React 0.553.0](https://lucide.dev/)** - Beautiful & consistent icon pack
-
-### Forms & Validation
-- **[React Hook Form 7.66.0](https://react-hook-form.com/)** - Performant forms with minimal re-renders
-- **[Zod 4.1.12](https://zod.dev/)** - TypeScript-first schema validation
-- **[@hookform/resolvers 5.2.2](https://github.com/react-hook-form/resolvers)** - Form validation resolvers
-
-### Data Visualization
-- **[Recharts 3.4.1](https://recharts.org/)** - Composable charting library
-- **[TanStack Table 8.21.3](https://tanstack.com/table)** - Headless UI table library
-
-### Development Tools
-- **[ESLint 9.39.1](https://eslint.org/)** - Code linting with Next.js configuration
-- **[TypeScript 5.9.3](https://www.typescriptlang.org/)** - Type checking and IntelliSense
-
-### Additional Features
-- **[Date-fns 4.1.0](https://date-fns.org/)** - Modern date utility library
-- **[Sonner 2.0.7](https://sonner.emilkowal.ski/)** - Toast notifications
-- **[Next Themes 0.4.6](https://github.com/pacocoursey/next-themes)** - Dark mode support
-- **[React Day Picker 9.11.1](https://react-day-picker.js.org/)** - Date picker component
+A complete, production-ready authentication system for Next.js with both token-based (JWT) and session-based authentication support, featuring modern security best practices.
 
 ## 🚀 Features
 
-### 🎨 UI/UX
-- **🌙 Dark Mode** - Built-in dark mode support with system preference detection
-- **📱 Responsive Design** - Mobile-first, fully responsive layouts
-- **♿ Accessibility** - WCAG compliant components with ARIA support
-- **🎯 Type Safety** - Full TypeScript support with strict mode
+### Authentication Modes
+- **Token-based Authentication**: JWT access tokens + HTTP-only refresh tokens
+- **Session-based Authentication**: Iron-session with secure cookies
+- **Switchable**: Change authentication mode via environment variable
 
-### 📊 Data Management
-- **📈 Interactive Charts** - Multiple chart types with Recharts
-- **📋 Advanced Tables** - Sortable, filterable, and searchable data tables
-- **📤 Form Handling** - Comprehensive form examples with validation
-- **🔍 Search & Filter** - Advanced search and filtering capabilities
+### Security Features
+- ✅ **JWT Token Rotation**: Automatic token refresh with rotation
+- ✅ **Token Blacklisting**: Revoke compromised tokens
+- ✅ **Refresh Token Hashing**: Store hashed refresh tokens in database
+- ✅ **CSRF Protection**: Built-in CSRF protection for session mode
+- ✅ **Secure Cookies**: HTTP-only, secure, same-site strict cookies
+- ✅ **Password Hashing**: bcrypt with 12 salt rounds
+- ✅ **Role-based Access Control**: User and admin roles
+- ✅ **Input Validation**: Zod schema validation on all inputs
+- ✅ **Rate Limiting Ready**: Easy to implement rate limiting
 
-### 🔐 Security & Performance
-- **⚡ Turbopack** - Lightning-fast development builds
-- **🔒 Security Headers** - Configured security headers
-- **📦 Optimized Bundles** - Automatic code splitting and optimization
-- **🚀 Static Generation** - Optimized for performance with SSG
+### Technical Features
+- 🎯 **Next.js App Router**: Modern Next.js architecture with proxy (formerly middleware)
+- 🗄️ **Drizzle ORM**: Type-safe database operations
+- 📱 **Responsive Design**: Mobile-first responsive UI
+- 🎨 **Modern UI**: Built with Tailwind CSS and Radix UI
+- 🔄 **Real-time Token Refresh**: Automatic token renewal
+- 📊 **TypeScript**: Full TypeScript support
+- 🧪 **Production Ready**: Optimized for production deployment
 
-### 🛠️ Developer Experience
-- **🔥 Hot Reload** - Instant feedback during development
-- **📝 ESLint + Prettier** - Code formatting and linting
-- **🎯 TypeScript** - Full type safety and IntelliSense
-- **📁 Organized Structure** - Clean, scalable project structure
-
-## 📦 Installation
-
-### Prerequisites
-- Node.js 18+ 
-- npm 9+ or yarn 1.22+
-
-### Quick Start
-```bash
-# Clone the repository
-git clone https://github.com/hussainiat/next-starter.git
-
-# Navigate to project directory
-cd next-starter
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-### Alternative Installation (if you encounter peer dependency issues)
-```bash
-npm install --legacy-peer-deps
-```
-
-## 🚦 Available Scripts
-
-```bash
-# Development
-npm run dev          # Start development server with Turbopack
-npm run dev:old      # Start development server without Turbopack
-
-# Building
-npm run build        # Build for production
-npm run start        # Start production server
-
-# Code Quality
-npm run lint         # Run ESLint
-npm run lint:fix     # Fix ESLint issues automatically
-npm run type-check   # Run TypeScript compiler check
-
-# Utilities
-npm run clean        # Clean build cache and .next folder
-npm run analyze      # Analyze bundle size
-```
+### Recent Updates
+- 🔄 **Middleware → Proxy**: Updated to use Next.js proxy convention (middleware is deprecated)
 
 ## 📁 Project Structure
 
 ```
-├── public/                    # Static assets
-│   ├── favicon.ico           # Website favicon
-│   └── *.svg                 # Static SVG images
-├── src/
-│   ├── app/                  # Next.js App Router
-│   │   ├── components/       # App-specific components
-│   │   ├── documentation/    # Documentation pages
-│   │   ├── examples/       # Example implementations
-│   │   ├── layout.tsx       # Root layout with providers
-│   │   ├── page.tsx         # Home page
-│   │   └── globals.css      # Global styles
-│   ├── components/           # Reusable components
-│   │   ├── auth/            # Authentication components
-│   │   ├── data-visualization/ # Charts and graphs
-│   │   ├── ui/              # Shadcn/ui components
-│   │   ├── footer.tsx       # Site footer
-│   │   ├── header.tsx       # Site header
-│   │   ├── theme-provider.tsx # Theme context provider
-│   │   └── theme-toggle.tsx  # Dark mode toggle
-│   ├── hooks/               # Custom React hooks
-│   │   └── use-mobile.ts    # Mobile detection hook
-│   └── lib/                 # Utility functions
-│       └── utils.ts         # Helper functions
-├── .eslintrc.json          # ESLint configuration
-├── components.json         # Shadcn/ui configuration
-├── eslint.config.mjs       # New ESLint flat config
-├── next.config.js          # Next.js configuration
-├── package.json            # Project dependencies
-├── postcss.config.mjs      # PostCSS configuration
-├── tailwind.config.ts      # Tailwind CSS configuration
-└── tsconfig.json           # TypeScript configuration
+src/
+├── app/
+│   ├── api/auth/          # Authentication API routes
+│   │   ├── register/route.ts
+│   │   ├── login/route.ts
+│   │   ├── logout/route.ts
+│   │   ├── refresh/route.ts
+│   │   └── me/route.ts
+│   ├── login/page.tsx     # Login page
+│   ├── register/page.tsx  # Registration page
+│   ├── dashboard/page.tsx # User dashboard (protected)
+│   └── admin/page.tsx     # Admin panel (admin only)
+├── lib/
+│   ├── auth/
+│   │   ├── types.ts       # TypeScript types
+│   │   ├── api.ts         # API client
+│   │   ├── context.tsx    # React context provider
+│   │   ├── token-utils.ts # JWT token management
+│   │   ├── session.ts     # Session management
+│   │   ├── password.ts    # Password hashing utilities
+│   │   └── config.ts      # Configuration
+│   └── db/
+│       ├── config.ts      # Database configuration
+│       └── schema.ts      # Database schemas
+└── proxy.ts               # Route protection proxy (formerly middleware)
 ```
 
-## 🎯 Component Examples
+## 🛠️ Installation
 
-### Data Visualization
-- **Interactive Charts** - Bar, line, area, and pie charts with tooltips
-- **Responsive Charts** - Mobile-optimized chart components
-- **Real-time Updates** - Dynamic data visualization examples
+### 1. Clone and Install
 
-### Form Components
-- **Login Forms** - Complete authentication forms with validation
-- **Registration Forms** - User registration with password strength
-- **Advanced Forms** - Multi-step forms with conditional fields
-- **Form Validation** - Zod schema validation examples
+```bash
+git clone <your-repo>
+cd nextjs-auth
+npm install
+```
 
-### UI Components
-- **Data Tables** - Sortable, searchable, and filterable tables
-- **Modals & Dialogs** - Accessible modal components
-- **Navigation** - Responsive navigation components
-- **Cards & Layouts** - Flexible layout components
+### 2. Environment Configuration
 
-### API Integration
-- **CRUD Operations** - Complete CRUD examples
-- **Error Handling** - Proper error handling patterns
-- **Loading States** - Skeleton loaders and spinners
-- **Pagination** - Server-side pagination examples
+Copy the example environment file:
 
-## 🔧 Configuration
+```bash
+cp .env.example .env.local
+```
 
-### Next.js Configuration
-The `next.config.js` file includes:
-- Turbopack configuration for fast builds
-- TypeScript compilation settings
-- Security optimizations
+Configure your environment variables:
 
-### Tailwind CSS Configuration
-The `tailwind.config.ts` includes:
-- Custom color palette
-- Extended spacing scale
-- Component class patterns
-- Dark mode support
+```env
+# Authentication Mode - "token" or "session"
+AUTH_MODE="session"
 
-### TypeScript Configuration
-The `tsconfig.json` includes:
-- Strict type checking
-- Path aliases for clean imports
-- Modern JavaScript features
-- IDE optimization settings
+# JWT Secrets (required for token mode)
+JWT_ACCESS_SECRET="your-super-secret-access-key-min-32-characters"
+JWT_REFRESH_SECRET="your-super-secret-refresh-key-min-32-characters"
+
+# Database URL
+DATABASE_URL="sqlite.db"
+
+# Session Secret (required for session mode)
+SESSION_SECRET="your-super-secret-session-key-min-32-characters"
+
+# Node Environment
+NODE_ENV="development"
+```
+
+### 3. Database Setup
+
+Generate and run database migrations:
+
+```bash
+# Generate migration files
+npm run db:generate
+
+# Push schema to database
+npm run db:push
+
+# Open Drizzle Studio for database management
+npm run db:studio
+```
+
+### 4. Start Development Server
+
+```bash
+npm run dev
+```
+
+Visit `http://localhost:3000` to see your application.
+
+## 🔐 Authentication Modes
+
+### Token-based Authentication (JWT)
+
+When `AUTH_MODE="token"`:
+
+- **Access Token**: 15-minute JWT stored in memory
+- **Refresh Token**: 7-day JWT stored in HTTP-only cookie
+- **Token Rotation**: New refresh token issued on each access
+- **Blacklist System**: Revoked tokens are blacklisted in database
+
+**Flow:**
+1. User logs in → receives access token + refresh token cookie
+2. Access token sent in Authorization header for API calls
+3. When access token expires → automatic refresh using refresh token
+4. Refresh token rotation → old token revoked, new token issued
+
+### Session-based Authentication
+
+When `AUTH_MODE="session"`:
+
+- **Secure Sessions**: Iron-session with encrypted cookies
+- **CSRF Protection**: Built-in CSRF protection
+- **Session Regeneration**: Session ID regenerated on login
+- **Automatic Cleanup**: Sessions automatically expire
+
+**Flow:**
+1. User logs in → session created and stored in encrypted cookie
+2. Session cookie automatically sent with requests
+3. Session validated on each protected route
+4. Session destroyed on logout
+
+## 🛡️ Security Best Practices
+
+### 1. Token Security
+
+```typescript
+// Access token (15 minutes)
+const accessToken = await tokenManager.generateAccessToken({
+  userId: user.id,
+  email: user.email,
+  role: user.role,
+});
+
+// Refresh token (7 days, HTTP-only cookie)
+const { token: refreshToken } = await tokenManager.generateRefreshToken(user.id);
+```
+
+### 2. Password Security
+
+```typescript
+// bcrypt with 12 salt rounds
+const passwordHash = await hashPassword(password);
+const isValid = await verifyPassword(password, passwordHash);
+```
+
+### 3. Database Security
+
+```typescript
+// Refresh tokens are hashed before storage
+const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+```
+
+### 4. Cookie Security
+
+```typescript
+// Secure cookie configuration
+response.cookies.set('refresh-token', refreshToken, {
+  httpOnly: true,
+  secure: config.isProduction,
+  sameSite: 'strict',
+  path: '/api/auth/refresh',
+  maxAge: 60 * 60 * 24 * 7, // 7 days
+});
+```
+
+## 🔑 Environment Variables
+
+| Variable | Required | Description | Default |
+|----------|----------|-------------|---------|
+| `AUTH_MODE` | ✅ | Authentication mode: "token" or "session" | "session" |
+| `JWT_ACCESS_SECRET` | ✅ (token mode) | Secret for access tokens | - |
+| `JWT_REFRESH_SECRET` | ✅ (token mode) | Secret for refresh tokens | - |
+| `SESSION_SECRET` | ✅ (session mode) | Secret for session encryption | - |
+| `DATABASE_URL` | ✅ | Database file path | "sqlite.db" |
+| `NODE_ENV` | ❌ | Environment mode | "development" |
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
-```bash
-# Install Vercel CLI
-npm i -g vercel
+### Vercel Deployment
 
-# Deploy
-vercel
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Configure environment variables in Vercel dashboard
+4. Deploy!
+
+### Docker Deployment
+
+```dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY . .
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
 ```
 
-### Other Platforms
-- **Netlify** - Connect your GitHub repo
-- **Railway** - One-click deployment
-- **Digital Ocean** - App Platform deployment
+### Environment Variables for Production
 
-## 🧪 Testing
-
-### Running Tests
-```bash
-# Run all tests
-npm test
-
-# Run tests in watch mode
-npm test:watch
-
-# Run tests with coverage
-npm test:coverage
+```env
+AUTH_MODE="session"
+JWT_ACCESS_SECRET="your-production-access-secret-min-32-chars"
+JWT_REFRESH_SECRET="your-production-refresh-secret-min-32-chars"
+SESSION_SECRET="your-production-session-secret-min-32-chars"
+DATABASE_URL="sqlite.db"
+NODE_ENV="production"
 ```
 
-### Test Structure
-- Unit tests for utility functions
-- Component tests with React Testing Library
-- Integration tests for API routes
-- E2E tests with Playwright (optional)
+## 🧪 Testing the System
+
+### 1. Register a New User
+
+Visit `/register` and create a new account:
+- Name: "John Doe"
+- Email: "john@example.com"
+- Password: "SecurePassword123!"
+
+### 2. Login
+
+Visit `/login` and sign in with your credentials.
+
+### 3. Access Protected Routes
+
+- `/dashboard` - Available to all authenticated users
+- `/admin` - Available only to admin users
+
+### 4. Create an Admin User
+
+To create an admin user, you'll need to manually update the database:
+
+```sql
+UPDATE users SET role = 'admin' WHERE email = 'john@example.com';
+```
+
+## 🔧 Switching Authentication Modes
+
+To switch between authentication modes:
+
+1. Update the `AUTH_MODE` environment variable
+2. Restart your application
+3. The system will automatically use the new mode
+
+**Note:** When switching from token to session mode, users will need to log in again.
+
+## 🛡️ Security Considerations
+
+### Production Checklist
+
+- [ ] Use strong, unique secrets for JWT and session encryption
+- [ ] Enable HTTPS in production
+- [ ] Configure proper CORS settings
+- [ ] Implement rate limiting on authentication endpoints
+- [ ] Set up proper logging and monitoring
+- [ ] Regular security audits and dependency updates
+- [ ] Database backups and disaster recovery
+
+### Rate Limiting (Recommended)
+
+Implement rate limiting on authentication endpoints to prevent brute force attacks:
+
+```typescript
+// Example using express-rate-limit
+import rateLimit from 'express-rate-limit';
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // limit each IP to 5 requests per windowMs
+  message: 'Too many login attempts, please try again later',
+});
+
+app.use('/api/auth/login', loginLimiter);
+```
+
+## 📚 API Documentation
+
+### Authentication Endpoints
+
+#### Register User
+```http
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "SecurePassword123!"
+}
+```
+
+#### Login
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "SecurePassword123!"
+}
+```
+
+#### Logout
+```http
+POST /api/auth/logout
+```
+
+#### Get Current User
+```http
+GET /api/auth/me
+Authorization: Bearer <access_token>
+```
+
+#### Refresh Token (Token Mode)
+```http
+POST /api/auth/refresh
+Cookie: refresh-token=<refresh_token>
+```
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
-**1. Build fails with TypeScript errors**
-```bash
-# Check TypeScript configuration
-npm run type-check
+1. **"Invalid credentials" error**
+   - Check that the user exists in the database
+   - Verify password is correct
+   - Check database connection
 
-# Fix auto-fixable issues
-npm run lint:fix
-```
+2. **Token refresh failing**
+   - Ensure refresh token cookie is being sent
+   - Check that refresh token hasn't been revoked
+   - Verify JWT secrets are configured correctly
 
-**2. Peer dependency warnings**
-```bash
-# Use legacy peer deps flag
-npm install --legacy-peer-deps
-```
+3. **Session not persisting**
+   - Check session secret is set correctly
+   - Ensure cookies are enabled in browser
+   - Verify session configuration in `session.ts`
 
-**3. Development server won't start**
-```bash
-# Clear cache and restart
-npm run clean
-npm run dev
-```
-
-**4. Icons not loading**
-- Ensure Lucide React is properly installed
-- Check import statements for correct icon names
-
-### Performance Issues
-- Use React DevTools Profiler to identify re-renders
-- Check bundle size with `npm run analyze`
-- Optimize images and static assets
+4. **Proxy not working**
+   - Check proxy configuration in `proxy.ts`
+   - Ensure environment variables are set
+   - Verify route paths match proxy config
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Workflow
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Code Standards
-- Follow TypeScript best practices
-- Write tests for new features
-- Update documentation as needed
-- Ensure all CI checks pass
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgments
+## 🆘 Support
 
-- [Next.js](https://nextjs.org/) for the amazing React framework
-- [Vercel](https://vercel.com/) for hosting and deployment
-- [Shadcn](https://ui.shadcn.com/) for the beautiful UI components
-- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
-
-## 📞 Support
-
-If you have any questions or need help:
-- 📧 Email: your-email@example.com
-- 💬 Discord: [Join our community](https://discord.gg/your-server)
-- 🐛 Issues: [Report bugs here](https://github.com/hussainiat/next-starter/issues)
+For issues and questions:
+1. Check the troubleshooting section
+2. Search existing GitHub issues
+3. Create a new issue with detailed information
 
 ---
 
-**⭐ Star this repo if you find it helpful!**
+**⚠️ Important**: This is a starter template. Always perform security audits and customize according to your specific requirements before deploying to production.
